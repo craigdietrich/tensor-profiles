@@ -1,4 +1,4 @@
-{
+profile({
   "archives":{ 
     {
       "title":"YouTube",
@@ -22,4 +22,4 @@
       "thumbnail":"https://github.com/craigdietrich/tensor-profiles/raw/master/parsers/internetarchive/internetarchive.thumb.png"         		
     },
   }
-}
+})
