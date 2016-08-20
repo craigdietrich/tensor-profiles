@@ -1,5 +1,6 @@
 profile({
    "name":"Starter Profile",
+   "filename":"starter.profile.js",
    "archives": [
       {
 		"title": "YouTube",
