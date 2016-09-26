@@ -16,7 +16,7 @@ profile({
 	  }, 
       {
 		"title": "Internet Archive",
-		"url":"internetarchive",
+		"url":"https://github.com/craigdietrich/tensor-profiles/tree/master/parsers/internetarchive",
 		"subtitle": "The Internet Archive is a non-profit digital library of just about anything.",
 		"categories": ["video", "image", "audio", "affiliated"]
 	  },
