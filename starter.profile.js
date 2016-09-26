@@ -4,35 +4,27 @@ profile({
    "archives": [
       {
 		"title": "YouTube",
-		"identifier": "youtube",
-		"parser":"youtube",
+		"url":"https://github.com/craigdietrich/tensor-profiles/tree/master/parsers/youtube",
 		"subtitle": "Hosts user-generated videos. Includes network and professional content.",
-		"categories": ["video"],
-		"thumbnail": "https://github.com/craigdietrich/tensor-profiles/raw/master/parsers/youtube/youtube.thumb.png"
+		"categories": ["video"]
 	  }, 
       {
 		"title": "Vimeo",
-		"identifier": "vimeo",
-		"parser":"vimeo",
+		"url":"https://github.com/craigdietrich/tensor-profiles/tree/master/parsers/vimeo",
 		"subtitle": "Upload, store, share and manage HD videos.",
-		"categories": ["video"],
-		"thumbnail": "https://github.com/craigdietrich/tensor-profiles/raw/master/parsers/vimeo/vimeo.thumb.png"
+		"categories": ["video"]
 	  }, 
       {
 		"title": "Internet Archive",
-		"identifier": "internetarchive",
-		"parser":"internetarchive",
+		"url":"internetarchive",
 		"subtitle": "The Internet Archive is a non-profit digital library of just about anything.",
-		"categories": ["video", "image", "audio", "affiliated"],
-		"thumbnail": "https://github.com/craigdietrich/tensor-profiles/raw/master/parsers/internetarchive/internetarchive.thumb.png"
+		"categories": ["video", "image", "audio", "affiliated"]
 	  },
       {
 		"title": "Critical Commons",
-		"identifier": "criticalcommons",
-		"parser":"criticalcommons",
+		"url":"https://github.com/craigdietrich/tensor-profiles/tree/master/parsers/criticalcommons",
 		"subtitle": "For Fair &amp; Critical Participation in Media Culture",
-		"categories": ["video", "image", "affiliated"],
-		"thumbnail": "https://github.com/craigdietrich/tensor-profiles/raw/master/parsers/criticalcommons/criticalcommons.thumb.png"
+		"categories": ["video", "image", "affiliated"]
 	  }
    ]
 });
