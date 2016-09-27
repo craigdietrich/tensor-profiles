@@ -42,7 +42,8 @@ profile({
 		"parser":"scalar",
 		"url":"http://scalar.usc.edu/works/complex-television",
 		"subtitle": "Video clips complementing Jason Mittell's Complex TV: The Poetics of Contemporary Television Storytelling (NYU Press, 2015).",
-		"categories": ["video", "affiliated"]
+		"categories": ["video", "affiliated"],
+		"thumbnail": "http://scalar.usc.edu/works/complex-television/media/book_thumbnail.jpg"
 	}
 	]
 });
