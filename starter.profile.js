@@ -36,6 +36,13 @@ profile({
 		"url":"http://scalar.usc.edu/works/guide2",
 		"subtitle": "This user's guide includes introductions to Scalar's features as well as more in-depth material to explore as your get to know the tools.",
 		"categories": ["video", "image", "affiliated", "audio"]
+	},
+	{
+		"title": "Complex TV",
+		"parser":"scalar",
+		"url":"http://scalar.usc.edu/works/complex-television",
+		"subtitle": "Video clips complementing Jason Mittell's Complex TV: The Poetics of Contemporary Television Storytelling (NYU Press, 2015).",
+		"categories": ["video", "affiliated"]
 	}
 	]
 });
