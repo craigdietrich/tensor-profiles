@@ -12,7 +12,7 @@
         	this.opts.complete_callback(results, archive);
         	return;
         }
-        for (var j in data.body.data) {
+        for (j = 0; j < data.body.data.length; j++) {
         	var uri = 'http://player.vimeo.com'+data.body.data[j].uri.replace('videos','video');
         	var sourceLocation = data.body.data[j].link;
         	var title = data.body.data[j].name;

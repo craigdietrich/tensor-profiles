@@ -1,5 +1,7 @@
 <?php
-require(FCPATH."application/models/handlers/vimeo/autoload.php");
+
+require_once(dirname(__FILE__).'/config.php');
+require_once(dirname(__FILE__).'/vimeo/autoload.php');
 $lib = new \Vimeo\Vimeo($client_id, $client_secret);
 $token = $lib->clientCredentials();
 $access_token = $token['body']['access_token'];
