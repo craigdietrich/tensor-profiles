@@ -1,5 +1,5 @@
 profile({
-   "name":"Another Profile",
+   "name":"Yet Another Profile",
    "uri":"https://raw.githubusercontent.com/craigdietrich/tensor-profiles/master/testing.profile.js",
    "archives": [
       {
