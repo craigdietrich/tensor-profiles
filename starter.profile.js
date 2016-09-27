@@ -1,6 +1,6 @@
 profile({
    "name":"Starter Profile",
-   "filename":"starter.profile.js",
+   "uri":"https://raw.githubusercontent.com/craigdietrich/tensor-profiles/master/starter.profile.js",
    "archives": [
       {
 		"title": "YouTube",
