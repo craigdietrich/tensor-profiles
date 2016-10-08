@@ -46,11 +46,11 @@ profile({
 		"thumbnail": "http://scalar.usc.edu/works/complex-television/media/book_thumbnail.jpg"
 	},
 	{
-		"title": "Oxy Global Crossroads",
+		"title": "History 355 + Moore Lab",
 		"parser":"crossroads",
-		"url":"https://crossroads.oxy.edu",
-		"subtitle": "Global Crossroads is Occidental College's public forum for sharing ideas and media on matters of global relevance.",
-		"categories": ["video", "image", "audio", "affiliated"]
+		"url":"https://crossroads.oxy.edu/projects/300",
+		"subtitle": "What can we learn about Nahua ('Aztec') knowledge, culture, society, and economy using ethnohistorical and biological evidence?",
+		"categories": ["image"]
 	}
 	]
 });
