@@ -6,7 +6,7 @@
     	model.fetch('json');
     };
     
-    S.fn.save = function(options) {
+    $.fn.save = function(options) {
     	var model = new $.fn.spreadsheet_model(options);
     	model.save = save;
     	model.fetch('json');  	
@@ -34,5 +34,3 @@
 	};
     
 }( jQuery ));
-
-
