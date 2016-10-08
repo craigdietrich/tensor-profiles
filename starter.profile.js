@@ -44,6 +44,12 @@ profile({
 		"subtitle": "Video clips complementing Jason Mittell's Complex TV: The Poetics of Contemporary Television Storytelling (NYU Press, 2015).",
 		"categories": ["video", "affiliated"],
 		"thumbnail": "http://scalar.usc.edu/works/complex-television/media/book_thumbnail.jpg"
+	},
+	{
+		"title": "Oxy Global Crossroads",
+		"parser":"crossroads",
+		"url":"https://crossroads.oxy.edu",
+		"categories": ["video", ,"image", "audio", "affiliated"]
 	}
 	]
 });
