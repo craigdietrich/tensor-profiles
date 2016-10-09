@@ -46,7 +46,7 @@ profile({
 		"thumbnail": "http://scalar.usc.edu/works/complex-television/media/book_thumbnail.jpg"
 	},
 	{
-		"title": "History 355 + Moore Lab",
+		"title": "History 355 collaboration with Moore Lab",
 		"parser":"crossroads",
 		"url":"https://crossroads.oxy.edu/projects/300",
 		"subtitle": "What can we learn about Nahua ('Aztec') knowledge, culture, society, and economy using ethnohistorical and biological evidence?",
