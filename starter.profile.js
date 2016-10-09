@@ -31,13 +31,6 @@ profile({
 		"categories": ["video", "image", "affiliated"]
 	},
 	{
-		"title": "Scalar 2 User's Guide",
-		"parser":"scalar",
-		"url":"http://scalar.usc.edu/works/guide2",
-		"subtitle": "This user's guide includes introductions to Scalar's features as well as more in-depth material to explore as your get to know the tools.",
-		"categories": ["video", "image", "affiliated", "audio"]
-	},
-	{
 		"title": "Complex TV",
 		"parser":"scalar",
 		"url":"http://scalar.usc.edu/works/complex-television",

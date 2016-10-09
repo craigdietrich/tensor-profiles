@@ -9,7 +9,7 @@
     $.fn.save = function(options) {
     	var model = new $.fn.spreadsheet_model(options);
     	model.save = save;
-    	model.fetch('json');  	
+    	model.save();  	
     };
     
 	function parse(data, archive) {
@@ -29,7 +29,9 @@
         this.opts.complete_callback(results, archive);
 	};   
 	
-	function save(data_type) {
+	function save() {
+		
+		console.log(this.opts);
 		
 	};
     
