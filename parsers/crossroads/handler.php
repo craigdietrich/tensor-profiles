@@ -10,9 +10,18 @@ $project_num = (int) $numbers[0];
 $url = 'https://crossroads.oxy.edu/srv/projects/'.$project_num.'/resources.json?page=1&itemsPerPage=all&sortBy=sequence&sortOrder=asc';
 
 // Generic HTTP handler
+/*
 session_start();
 $opts = array('http' => array('header'=> 'Cookie: ' . @$_SERVER['HTTP_COOKIE']."\r\n"));
 $context = stream_context_create($opts);
 session_write_close();
 $content = file_get_contents($url, false, $context);
+*/
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+$content = curl_exec($ch);
+curl_close($ch);
 ?>
