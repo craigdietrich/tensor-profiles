@@ -21,10 +21,12 @@
 			var thumb = '';
 			if ('undefined'!=typeof(data.list[j].resource.img_original) && null!=data.list[j].resource.img_original) {
 				uri = base_url+data.list[j].resource.img_original;
+			} else if ('undefined'!=typeof(data.list[j].resource.source_url) && null!=data.list[j].resource.source_url) {
+				uri = data.list[j].resource.source_url;				
 			} else if ('undefined'!=typeof(data.list[j].resource.doc_path) && null!=data.list[j].resource.doc_path) { 
 				uri = base_url+data.list[j].resource.doc_path;				
 			} else {
-				uri = data.list[j].resource.source_url;
+				continue;  // TODO
 			};
 			if (-1!=uri.indexOf('?')) uri = uri.substr(0, uri.indexOf('?'));
 			if ('undefined'!=typeof(data.list[j].resource.img_thumb) && null!=data.list[j].resource.img_thumb) {
@@ -34,7 +36,8 @@
 			var title = data.list[j].resource.excerpt;
 			var desc = data.list[j].resource.credit_formatted;
 			var source = archive.title;
-			var sourceLocation = base_url+data.list[j].project_resource_uri;
+			//var sourceLocation = base_url+data.list[j].project_resource_uri;
+			var sourceLocation = uri;
 			var format = data.list[j].resource.resource_type;
 			var identifier = data.list[j].resource.id;
 			var date = data.list[j].created_at;
