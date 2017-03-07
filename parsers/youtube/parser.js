@@ -1,6 +1,7 @@
 (function( $ ) {
 	
     $.fn.parse = function(options) {
+    	if (!options.query.length) throw "YouTube requires at least one search term to be entered into the search field.";
     	var model = new $.fn.spreadsheet_model(options);
     	model.parse = parse;
     	model.fetch('json');

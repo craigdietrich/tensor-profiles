@@ -1,6 +1,7 @@
 (function( $ ) {
 	
     $.fn.parse = function(options) {
+    	if (!options.query.length) throw "Vimeo requires at least one search term to be entered into the search field.";
     	var model = new $.fn.spreadsheet_model(options);
     	model.parse = parse;
     	model.fetch('json');
@@ -8,10 +9,12 @@
     
 	function parse(data, archive) {
         var results = {};
-        if ('undefined'==typeof(data.body) || 'undefined'==typeof(data.body.data)) {
+        if ('undefined'!=typeof(data.body) && 'undefined'!=typeof(data.body.error) && data.body.error.length) {
+        	this.opts.error_callback(data.body.error, archive);
+        } else if ('undefined'==typeof(data.body) || 'undefined'==typeof(data.body.data)) {
         	this.opts.complete_callback(results, archive);
         	return;
-        }
+        };
         for (j = 0; j < data.body.data.length; j++) {
         	var uri = 'http://player.vimeo.com'+data.body.data[j].uri.replace('videos','video');
         	var sourceLocation = data.body.data[j].link;
