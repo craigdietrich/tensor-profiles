@@ -52,6 +52,13 @@ profile({
 		"subtitle": "Explore historical maps, discover stories you never knew, find people and historical events related to the Mall's past.",
 		"categories": ["image"],
 		"thumbnail": "http://mallhistory.org/files/theme_uploads/e7ba5426e00e4fe9af499a6ce0731a4f.png"
+	},
+	{
+		"title": "TriArte Art and Artifacts Database",
+		"parser":"triarte",
+		"url":"http://triarte.brynmawr.edu",
+		"subtitle": "TriArte features over 33,500 art and artifacts from Bryn Mawr, Haverford, and Swarthmore Colleges.",
+		"categories": ["image"],
 	}
 	]
 });
