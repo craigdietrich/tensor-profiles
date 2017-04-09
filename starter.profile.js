@@ -3,11 +3,11 @@ profile({
 	"uri":"https://raw.githubusercontent.com/craigdietrich/tensor-profiles/master/starter.profile.js",
 	"archives": [
 	{
-    	  "title": "YouTube",
-    	  "parser":"youtube",
-    	  "url":"https://www.googleapis.com/youtube/v3",
-    	  "subtitle": "Hosts user-generated videos. Includes network and professional content.",
-    	  "categories": ["video"]
+		"title": "YouTube",
+		"parser":"youtube",
+		"url":"https://www.googleapis.com/youtube/v3",
+		"subtitle": "Hosts user-generated videos. Includes network and professional content.",
+		"categories": ["video"]
 	}, 
 	{
 		"title": "Vimeo",
@@ -20,7 +20,7 @@ profile({
 		"title": "Internet Archive",
 		"parser":"internetarchive",
 		"url":"https://archive.org",
-		"subtitle": "The Internet Archive is a non-profit digital library of just about anything.",
+		"subtitle": "A non-profit digital library of just about anything.",
 		"categories": ["video", "image", "audio", "affiliated"]
 	},
 	{
@@ -34,7 +34,7 @@ profile({
 		"title": "Complex TV",
 		"parser":"scalar",
 		"url":"http://scalar.usc.edu/works/complex-television",
-		"subtitle": "Video clips complementing Jason Mittell's Complex TV: The Poetics of Contemporary Television Storytelling (NYU Press, 2015).",
+		"subtitle": "Scalar book complementing Jason Mittell's Complex TV: The Poetics of Contemporary Television Storytelling (NYU Press, 2015).",
 		"categories": ["video", "affiliated"],
 		"thumbnail": "http://scalar.usc.edu/works/complex-television/media/book_thumbnail.jpg"
 	},
@@ -42,14 +42,14 @@ profile({
 		"title": "History 355 collaboration with Moore Lab",
 		"parser":"crossroads",
 		"url":"https://crossroads.oxy.edu/projects/300",
-		"subtitle": "What can we learn about Nahua ('Aztec') knowledge, culture, society, and economy using ethnohistorical and biological evidence?",
+		"subtitle": "Crossroads project on what can we learn about Nahua ('Aztec') knowledge, culture, society, and economy using ethnohistorical and biological evidence?",
 		"categories": ["image"]
 	},
 	{
 		"title": "Histories of the National Mall",
 		"parser":"omeka",
 		"url":"http://mallhistory.org",
-		"subtitle": "Explore historical maps, discover stories you never knew, find people and historical events related to the Mall's past.",
+		"subtitle": "Omeka archive with historical maps, stories, people and historical events related to the Mall's past.",
 		"categories": ["image"],
 		"thumbnail": "http://mallhistory.org/files/theme_uploads/e7ba5426e00e4fe9af499a6ce0731a4f.png"
 	},
