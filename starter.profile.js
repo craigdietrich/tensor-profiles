@@ -60,5 +60,12 @@ profile({
 		"subtitle": "TriArte features over 33,500 art and artifacts from Bryn Mawr, Haverford, and Swarthmore Colleges.",
 		"categories": ["image"],
 	}
-	]
+	],
+        "collections":[
+	{
+		"title":"Starter Profile Items",
+		"description":"Items imported from starter profile archives",
+		"color":"#5cb85c"
+	}
+        ]
 });
