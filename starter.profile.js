@@ -63,7 +63,7 @@ profile({
 	],
         "collections":[
 	{
-		"title":"Starter Profile Items",
+		"title":"Starter profile items",
 		"description":"Items imported from starter profile archives",
 		"color":"#5cb85c"
 	}
