@@ -15,7 +15,14 @@ profile({
 		"url":"https://api.vimeo.com",
 		"subtitle": "Upload, store, share and manage HD videos.",
 		"categories": ["video"]
-	}, 
+	},
+	{
+		"title": "SoundCloud",
+		"parser":"soundcloud",
+		"url":"https://soundcloud.com",
+		"subtitle": "Audio platform of shared music and sounds.",
+		"categories": ["audio"]
+	},
 	{
 		"title": "Internet Archive",
 		"parser":"internetarchive",
