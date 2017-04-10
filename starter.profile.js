@@ -64,7 +64,7 @@ profile({
         "collections":[
 	{
 		"title":"Starter profile items",
-		"description":"Items imported from starter profile archives",
+		"description":"Items from starter profile archives",
 		"color":"#5cb85c"
 	}
         ]
