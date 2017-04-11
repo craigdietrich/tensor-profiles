@@ -24,6 +24,13 @@ profile({
 		"categories": ["audio"]
 	},
 	{
+		"title": "Flickr",
+		"parser":"flickr",
+		"url":"https://www.flickr.com/",
+		"subtitle": "Picture galleries available with social networking, chat, groups, and photo ratings.",
+		"categories": ["image","video"]
+	},
+	{
 		"title": "Internet Archive",
 		"parser":"internetarchive",
 		"url":"https://archive.org",
