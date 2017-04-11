@@ -1,0 +1,4 @@
+<?php
+$flickrApiKey = '';
+$flickrApiSecret = '';
+?>
