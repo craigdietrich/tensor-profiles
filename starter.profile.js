@@ -75,10 +75,10 @@ profile({
 		"thumbnail": "http://mallhistory.org/files/theme_uploads/e7ba5426e00e4fe9af499a6ce0731a4f.png"
 	},
 	{
-		"title": "Trans-Atlantic Slave Trade Database",
+		"title": "Voyages: Trans-Atlantic Slave Trade Database",
 		"parser":"django-images",
 		"url":"http://www.slavevoyages.org",
-		"subtitle": "Information on almost 36,000 slaving voyages that forcibly embarked over 10 million Africans for transport to the Americas between the sixteenth and nineteenth centuries.",
+		"subtitle": "Info on almost 36,000 slaving voyages that forcibly embarked over 10 million Africans for transport to the Americas between the sixteenth and nineteenth centuries.",
 		"categories": ["image"],
 		"thumbnail": "http://blog.historians.org/images/284.jpg"
 	}
