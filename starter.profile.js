@@ -81,6 +81,13 @@ profile({
 		"subtitle": "Info on almost 36,000 slaving voyages that forcibly embarked over 10 million Africans for transport to the Americas between the sixteenth and nineteenth centuries.",
 		"categories": ["image"],
 		"thumbnail": "http://blog.historians.org/images/284.jpg"
+	},
+	{
+		"title": "The Metropolitan Museum of Art",
+		"parser":"themet",
+		"url":"http://www.metmuseum.org",
+		"subtitle": "Works of art spanning five thousand years of world culture, from prehistory to the present and from every part of the globe.",
+		"categories": ["image"]
 	}
 	],
         "collections":[
