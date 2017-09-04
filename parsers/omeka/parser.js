@@ -61,8 +61,8 @@
 				var file_urls = data[j].file_urls[0];  // TODO
 				var thumbnail = file_urls.thumbnail;
 				var fullsize = file_urls.fullsize;
-				results[uri]['http://simile.mit.edu/2003/10/ontologies/artstor#thumbnail'] = [{type:'uri',value:thumbnail}];
-				results[uri]['http://simile.mit.edu/2003/10/ontologies/artstor#url'] = [{type:'uri',value:fullsize}];		
+				if (thumbnail) results[uri]['http://simile.mit.edu/2003/10/ontologies/artstor#thumbnail'] = [{type:'uri',value:thumbnail}];
+				if (fullsize) results[uri]['http://simile.mit.edu/2003/10/ontologies/artstor#url'] = [{type:'uri',value:fullsize}];		
 			};
 		}
         console.log(results);

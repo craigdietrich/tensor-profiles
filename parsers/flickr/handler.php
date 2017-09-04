@@ -12,6 +12,7 @@ $flickr = new Flickr($flickrApiKey, $flickrApiSecret);
 $parameters =  array(
 		'text' => $query,
 		'per_page' => 50,
+		'page' => $page,
 		'extras' => 'description,license,date_upload,date_taken,owner_name,original_format,geo,tags,media,url_s,url_l',
 );
 $response = $flickr->call('flickr.photos.search', $parameters);

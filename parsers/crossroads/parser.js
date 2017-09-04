@@ -60,15 +60,76 @@
 	};   
 	
 	function save() {
-		
+		var opts = this.opts;
+		var count = 1;
+		var total = 1;
+		for (var uri in opts.data) {
+			var formData = new FormData();   
+			var url = opts.data[uri]['http://simile.mit.edu/2003/10/ontologies/artstor#url'][0].value;
+			console.log(url);
+			var request = new XMLHttpRequest();
+			request.responseType = "blob";
+			request.onload = function() {
+			  formData.append("resource[image_file]", request.response);  // https://stackoverflow.com/questions/37241882/how-to-append-an-image-from-url-to-a-formdata-javascript
+			  formData.append("resource[resource_type]", 'image');
+			  formData.append("resource[image_crop_x]", '');
+			  formData.append("resource[image_crop_y]", '');
+			  formData.append("resource[image_crop_w]", '');
+			  formData.append("resource[image_crop_h]", '');
+			  formData.append("resource[image_crop_x2]", '');
+			  formData.append("resource[image_crop_y2]", '');
+			  formData.append("resource[doc_file]", '');
+			  formData.append("resource[excerpt]", 'This is the title');
+			  formData.append("resource[credit]", 'This is the credit');
+			  formData.append("resource[source_url]", '');
+			  formData.append("resource[start_time]", '');
+			  formData.append("resource[end_time]", '');
+			  formData.append("resource[video_thumb]", '');
+			  formData.append("resource[video_id]", '');
+			  formData.append("resource[video_type]", '');
+			  formData.append("resource[address]", '');
+			  formData.append("resource[lng]", '');
+			  formData.append("resource[lat]", '');
+			  formData.append("resource[courses_list]", '1');
+			  formData.append("resource[topics_list]", '15');
+			  formData.append("resource[keywords_list]", '4286');
+			  $.ajax({
+				    url: 'https://'+extractDomain(opts.url)+'/srv/resources.json',
+				    data: formData,
+				    cache: false,
+				    contentType: false,
+				    processData: false,
+				    /* crossDomain: true, */
+				    xhrFields: {
+				        withCredentials: true
+				    },
+				    type: 'POST',
+				    success: function(data) {
+				        console.log('success');
+				        console.log(data);
+				        $('#content_progress').width(((count/total)*100)+'%').find('span').text('Content '+count+' of '+total);
+				    },
+				    error: function(err) {
+				    	console.log('error');
+				    	console.log(err);
+				    	$('#content_progress').width(((count/total)*100)+'%').find('span').text('Content '+count+' of '+total);
+				    }
+				});			  
+			};
+			request.onerror = function(e) {
+				alert('Something went wrong attempting to get the media file');
+			};
+			request.open("GET", url);
+			request.send();
+			count++;
+		};
 	};
 	
 	function extractDomain(url) {
 	    var domain;
 	    if (url.indexOf("://") > -1) {
 	        domain = url.split('/')[2];
-	    }
-	    else {
+	    } else {
 	        domain = url.split('/')[0];
 	    }
 	    domain = domain.split(':')[0];
