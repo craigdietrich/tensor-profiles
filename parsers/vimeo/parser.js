@@ -11,6 +11,7 @@
         var results = {};
         if ('undefined'!=typeof(data.body) && 'undefined'!=typeof(data.body.error) && data.body.error.length) {
         	this.opts.error_callback(data.body.error, archive);
+        	return;
         } else if ('undefined'==typeof(data.body) || 'undefined'==typeof(data.body.data)) {
         	this.opts.complete_callback(results, archive);
         	return;
@@ -29,8 +30,8 @@
         	var creator = data.body.data[j].user.name;
         	var subjects = [];
         	if ('undefined'!=typeof(data.body.data[j].tags) && data.body.data[j].tags) {
-	        	for (var k in data.body.data[j].tags) {
-	        		if ('undefined'!=typeof(data.body.data[j].tags[k]) && data.body.data[j].tags[k]) {
+	        	for (var k = 0; k < data.body.data[j].tags.length; k++) {
+	        		if ('undefined'!=typeof(data.body.data[j].tags[k]) && data.body.data[j].tags[k] && 'undefined'!=typeof(data.body.data[j].tags[k].name)) {
 	        			subjects.push(data.body.data[j].tags[k].name);
 	        		}
 	        	}
@@ -48,7 +49,7 @@
         	if ('undefined'!=typeof(temporal) && temporal) results[uri]['http://purl.org/dc/terms/temporal'] = [{type:'literal',value:temporal}];
         	if ('undefined'!=typeof(license) && license) results[uri]['http://purl.org/dc/terms/license'] = [{type:'literal',value:license}];
         	if ('undefined'!=typeof(creator) && creator) results[uri]['http://purl.org/dc/terms/creator'] = [{type:'literal',value:creator}];
-        	for (var k in subjects) {
+        	for (var k = 0; k < subjects.length; k++) {
         		if ('undefined'==typeof(results[uri]['http://purl.org/dc/terms/subject'])) {
         			results[uri]['http://purl.org/dc/terms/subject'] = [];
         		}

@@ -1,7 +1,13 @@
 <?php
 
 require_once(dirname(__FILE__).'/config.php');
-$url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='.$query.'&maxResults=50&type=video&key='.$key;
+
+if ($single) {
+	if (stristr($query, '://')) $query = substr($query, strrpos($query,'/')+1); 
+	$url = 'https://www.googleapis.com/youtube/v3/videos?id='.$query.'&key='.$key.'&part=snippet';
+} else {
+	$url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='.$query.'&maxResults=50&type=video&key='.$key;
+}
 // TODO: pageToken
 
 // Generic HTTPS handler
