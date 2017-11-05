@@ -10,7 +10,11 @@
         var results = {};
         for (var j = 0; j < data.results.length; j++) {
         	var image_base = 'http://images.metmuseum.org/CRDImages/'
-        	var sourceLocation = archive.url + data.results[j].url;
+        	if (archive.single) {
+        		var sourceLocation = archive.query;
+        	} else {
+        		var sourceLocation = archive.url + data.results[j].url;
+        	};
         	var title = data.results[j].title;
         	var description = data.results[j].description;
         	var thumb = image_base + data.results[j].regularImage;
@@ -32,6 +36,7 @@
 	        results[sourceLocation]['http://purl.org/dc/terms/medium'] = [{type:'literal',value:medium}];
 	        results[sourceLocation]['http://purl.org/dc/terms/identifier'] = [{type:'literal',value:id}];
 	        results[sourceLocation]['http://purl.org/dc/terms/source'] = [{type:'literal',value:source}];
+	        if (archive.single) break;
         };
         console.log(results);
         this.opts.complete_callback(results, archive);

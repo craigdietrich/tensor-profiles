@@ -1,7 +1,8 @@
 <?php
 
-if (!empty($url_override) && stristr($url_override, $url)) {
-	$url = $url_override;
+if ($single) {
+	$url = $query;
+	$myvars = '';
 } else {
 	$url = $url.'/4DACTION/HANDLECGI/CTN3?display=POR';
 	$myvars = 'SearchType=all&WholeWord=0&RefineSearch=NewSelection&theKW='.rawurlencode($query);
