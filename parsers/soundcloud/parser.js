@@ -1,19 +1,35 @@
 (function( $ ) {
 	
     $.fn.parse = function(options) {
-    	console.log(options);
     	if (!options.query.length) throw "SoundCloud requires at least one search term to be entered into the search field.";
     	$.getJSON( $('link#base_url').attr('href')+'parsers/'+options.parser+'/config.json', function(json) {
 	    	$.getScript('https://connect.soundcloud.com/sdk/sdk-3.1.2.js', function() {
 	    		SC.initialize({
 	    		  client_id: json.client_id
 	    		});
-	    		SC.get('/tracks', {
-	    		  q: options.query,
-	    		  limit:50
-	    		}).then(function(tracks) {
-	    		  parse(tracks, options);
-	    		});
+	    		if (options.single) {
+	    			if (-1==options.query.indexOf('?id=')) {
+	    				var msg = 'This '+options.title+' item was imported before the refresh feature was added and therefore can\'t be refreshed.';
+	    				if ('function'==typeof(options.error_callback)) {
+	    					return options.error_callback(msg);
+	    				} else {
+	    					return options.complete_callback();
+	    				};
+	    			};
+	    			var id = options.query.split('?id=')[1];
+		    		SC.get('/tracks', {
+			    	  ids:id
+			    	}).then(function(tracks) {
+			    	  parse(tracks, options);
+			    	});
+	    		} else {
+		    		SC.get('/tracks', {
+		    		  q: options.query,
+		    		  limit:50
+		    		}).then(function(tracks) {
+		    		  parse(tracks, options);
+		    		});
+	    		};
 	    	});
     	});
     };
@@ -31,7 +47,9 @@
     	    var license = tracks[j].license;
     	    var format = tracks[j].original_format;
         	var sourceLocation = tracks[j].permalink_url;
-        	var uri = tracks[j].permalink_url;  // Scalar understands this
+        	var url = tracks[j].permalink_url;
+        	var uri = tracks[j].permalink_url+'?id='+identifier;
+        	if (uri.indexOf('http://')!=-1) uri = uri.replace('http://','https://');
         	var title = tracks[j].title;
         	var creator = tracks[j].user.username;
         	results[uri] = {};
@@ -44,7 +62,7 @@
         	results[uri]['http://purl.org/dc/terms/license'] = [{type:'literal',value:license}];
         	results[uri]['http://purl.org/dc/terms/format'] = [{type:'literal',value:format}];
         	results[uri]['http://simile.mit.edu/2003/10/ontologies/artstor#sourceLocation'] = [{type:'uri',value:sourceLocation}];
-        	results[uri]['http://simile.mit.edu/2003/10/ontologies/artstor#url'] = [{type:'uri',value:uri}];
+        	results[uri]['http://simile.mit.edu/2003/10/ontologies/artstor#url'] = [{type:'uri',value:url}];
         	results[uri]['http://purl.org/dc/terms/title'] = [{type:'literal',value:title}];
         	results[uri]['http://purl.org/dc/terms/creator'] = [{type:'literal',value:creator}];
         	results[uri]['http://purl.org/dc/terms/source'] = [{type:'literal',value:options.title}];
