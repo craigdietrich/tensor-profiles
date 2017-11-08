@@ -88,6 +88,13 @@ profile({
 		"url":"http://www.metmuseum.org",
 		"subtitle": "Works of art spanning five thousand years of world culture, from prehistory to the present and from every part of the globe.",
 		"categories": ["image"]
+	},
+	{
+		"title": "USC Digital Library",
+		"parser":"contentdm",
+		"url":"http://digitallibrary.usc.edu",
+		"subtitle": "Spanning a wide range of visual media, the USC Digital Library offers digital images of drawings, illuminated manuscripts, maps, photographs, posters, prints, rare illustrated books, as well as audio and video recordings.",
+		"categories": ["image"]
 	}
 	],
         "collections":[
