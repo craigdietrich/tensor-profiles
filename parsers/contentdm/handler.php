@@ -1,6 +1,8 @@
 <?php
 
 // See http://www.finditillinois.org/wordpress/?page_id=38
+$results_per_page = 10;
+$hostname = parse_url($url, PHP_URL_HOST);
 
 // First, get the server number
 $contents = file_get_contents($url);
@@ -14,7 +16,7 @@ $server = substr($col_str, strpos($col_str,'p')+1);
 $server = (int) substr($server, 0, strpos($server,'col'));
 
 // Second, run API search
-$api = 'https://server'.$server.'.contentdm.oclc.org/dmwebservices/index.php?q=dmQuery/all/title^'.rawurlencode($query).'^all^and/title!subjec!descri!thumb/nosort/100/1/0/0/0/0/xml';
+$api = 'https://server'.$server.'.contentdm.oclc.org/dmwebservices/index.php?q=dmQuery/all/title^'.urlencode($query).'^all^and/title!subjec!descri!thumb/nosort/'.$results_per_page.'/'.$page.'/1/0/0/0/xml';
 $contents = file_get_contents($api);
 $dom = new DOMDocument;
 libxml_use_internal_errors(true);
@@ -30,16 +32,58 @@ foreach($elements as $node){
 	$count++;
 }
 
-// Finally, call each record individually
+// Third, call each record individually
 $return = array();
 foreach ($records as $record) {
 	$api = 'https://server'.$server.'.contentdm.oclc.org/dmwebservices/index.php?q=dmGetItemInfo'.$record['collection'].'/'.$record['pointer'].'/json';
 	$contents = file_get_contents($api);
 	$contents = json_decode($contents);
+	$contents->orig_title = $contents->title;
 	$contents->server = $server;
 	$contents->collection = $record['collection'];
 	$contents->pointer = $record['pointer'];
-	$return[] = $contents;
+	$contents->thumb_str = '//'.$hostname.'/utils/getthumbnail/collection'.$record['collection'].'/id/'.$record['pointer'];
+	$contents->is_compound = strpos($contents->find, ".cpd") ? true : false;
+	if ($contents->is_compound) {
+		$contents->source_str = '//'.$hostname.'/cdm/compoundobject/collection'.$record['collection'].'/id/'.$record['pointer'].'/rec/1';
+		$contents->url_str = 'http://'.$hostname.'/utils/getfile/collection'.$record['collection'].'/id/'.$record['pointer'];
+	} else {
+		$contents->source_str = '//'.$hostname.'/cdm/ref/collection'.$record['collection'].'/id/'.$record['pointer'];
+		if (stristr($hostname, '.usc.edu') && stristr($contents->find, '.jp2')) {
+			$contents->url_str = '//lib-app.usc.edu/assetserver/controller/item/'.$contents->filena.'.jpg?v=1024';
+		} elseif (stristr($contents->find, '.jp2')) {
+			$contents->url_str = 'CONTENTDM IMAGE URL';
+		} else {
+			$contents->url_str = '//'.$hostname.'/utils/getfile/collection'.$record['collection'].'/id/'.$record['pointer'];
+		}
+	}
+	$return[] = clone $contents;
+	// Finally, get compound filenames
+	if ($contents->is_compound) {
+		$cpd = 'https://server'.$server.'.contentdm.oclc.org/dmwebservices/index.php?q=dmGetCompoundObjectInfo'.$record['collection'].'/'.$record['pointer'].'/json';
+		$cpd_contents = file_get_contents($cpd);
+		$cpd_contents = json_decode($cpd_contents);
+		$page_num = 1;
+		foreach ($cpd_contents->page as $page) {
+			$contents->is_compound = false;
+			$contents->title = $contents->orig_title.' - '.$page->pagetitle;
+			$contents->filena = $page->pagefile;
+			$contents->pointer = $page->pageptr;
+			$contents->source_str = '//'.$hostname.'/cdm/ref/collection'.$record['collection'].'/id/'.$page->pageptr;
+			$contents->thumb_str = '//'.$hostname.'/utils/getthumbnail/collection'.$record['collection'].'/id/'.$page->pageptr;
+			if (stristr($hostname, '.usc.edu') && stristr($contents->filena, '.jp2')) {
+				$contents->url_str = '//lib-app.usc.edu/assetserver/controller/item/'.$page->pagetitle.'.jpg?v=1024';
+			} elseif (stristr($contents->filena, '.jp2')) {
+				$contents->url_str = 'CONTENTDM IMAGE URL';
+			} elseif (stristr($contents->filena, '.pdfpage')) {
+				$contents->url_str = '//'.$hostname.'/utils/getfile/collection'.$record['collection'].'/id/'.$record['pointer'].'/filename/'.$page->pagefile.'/page/'.$page_num;
+			} else {
+				$contents->url_str = '//'.$hostname.'/utils/getfile/collection'.$record['collection'].'/id/'.$record['pointer'].'/filename/'.$page->pagefile.'/page/'.$page_num;
+			}
+			$return[] = clone $contents;
+			$page_num++;
+		}
+	}
 }
 
 $content = json_encode($return);
