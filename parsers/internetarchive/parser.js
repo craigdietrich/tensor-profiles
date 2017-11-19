@@ -33,7 +33,7 @@
         	// Identifier is in the URI and thumbnail
         	var identifier = $this.find('[name="identifier"]').text();
         	var uri = '';
-        	// Get the URI and thumbnail by comparing the list of formats to the precidence lists above
+        	// Get the URI and thumbnail by comparing the list of formats to the precidence listed above
         	var formats = [];
         	$this.find('[name="format"] str').each(function() {
         		formats.push($(this).text().replace(' ','+'));
