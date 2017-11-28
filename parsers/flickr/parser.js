@@ -10,7 +10,7 @@
 	function parse(data, archive) {
         var results = {};
         for (j = 0; j < data.photo.length; j++) {
-        	var uri = data.photo[j].url_l;
+        	var uri = data.photo[j].url_l+'?text='+encodeURIComponent(data._tensorQuery.text)+'&per_page='+data._tensorQuery.per_page+'&page='+data._tensorQuery.page;
         	var date = data.photo[j].datetaken;
         	var description = data.photo[j].description._content;
         	var width = data.photo[j].width_l;
