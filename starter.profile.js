@@ -103,7 +103,7 @@ profile({
 		"url":"http://digitalcollections.lib.washington.edu",
 		"subtitle": "This site features materials such as photographs, maps, newspapers, posters, reports and other media from the University of Washington Libraries, University of Washington Faculty and Departments, and organizations that have participated in partner projects with the UW Libraries. The collections emphasize rare and unique materials.",
 		"categories": ["image"],
-                "thumbnail": "https://static1.squarespace.com/static/5437236de4b098bc09157a4f/55a5cf75e4b05434789ed115/55a5cf75e4b05434789ed11a/1413399842245/mzl.trxvbrzp.175x175-75.jpg"
+                "thumbnail": "https://pbs.twimg.com/profile_images/789187282922110976/Hj7x2uuw.jpg"
 	},
 	{
 		"title": "Callimachus",
