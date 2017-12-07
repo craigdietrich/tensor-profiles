@@ -96,6 +96,22 @@ profile({
 		"subtitle": "Spanning a wide range of visual media, the USC Digital Library offers digital images of drawings, illuminated manuscripts, maps, photographs, posters, prints, rare illustrated books, as well as audio and video recordings.",
 		"categories": ["image"],
                 "thumbnail": "https://static1.squarespace.com/static/5437236de4b098bc09157a4f/55a5cf75e4b05434789ed115/55a5cf75e4b05434789ed11a/1413399842245/mzl.trxvbrzp.175x175-75.jpg"
+	},
+	{
+		"title": "University of Washington Libraries Digital Collections",
+		"parser":"contentdm",
+		"url":"http://digitalcollections.lib.washington.edu",
+		"subtitle": "This site features materials such as photographs, maps, newspapers, posters, reports and other media from the University of Washington Libraries, University of Washington Faculty and Departments, and organizations that have participated in partner projects with the UW Libraries. The collections emphasize rare and unique materials.",
+		"categories": ["image"],
+                "thumbnail": "https://static1.squarespace.com/static/5437236de4b098bc09157a4f/55a5cf75e4b05434789ed115/55a5cf75e4b05434789ed11a/1413399842245/mzl.trxvbrzp.175x175-75.jpg"
+	},
+	{
+		"title": "Callimachus",
+		"parser":"contentdm",
+		"url":"http://callimachus.org",
+		"subtitle": "Occidental College content including the Japanese American Relocation collection, the Stereograph collection, the Bill Henry collection, the Railroading collection, Occidental College's Environmental Design collection, and the Barack Obama, U.S. President and Alumnus collection.",
+		"categories": ["image"],
+                "thumbnail": "https://static1.squarespace.com/static/5437236de4b098bc09157a4f/55a5cf75e4b05434789ed115/55a5cf75e4b05434789ed11a/1413399842245/mzl.trxvbrzp.175x175-75.jpg"
 	}
 	],
         "collections":[
