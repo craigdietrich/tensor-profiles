@@ -111,7 +111,7 @@ profile({
 		"url":"http://callimachus.org",
 		"subtitle": "Occidental College content including the Japanese American Relocation collection, the Stereograph collection, the Bill Henry collection, the Railroading collection, Occidental College's Environmental Design collection, and the Barack Obama, U.S. President and Alumnus collection.",
 		"categories": ["image"],
-                "thumbnail": "https://static1.squarespace.com/static/5437236de4b098bc09157a4f/55a5cf75e4b05434789ed115/55a5cf75e4b05434789ed11a/1413399842245/mzl.trxvbrzp.175x175-75.jpg"
+                "thumbnail": "https://sites.oxy.edu/marketing/oxy-logo/occidental-logo.png"
 	}
 	],
         "collections":[
