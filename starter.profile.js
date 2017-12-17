@@ -68,7 +68,7 @@ profile({
 	},
 	{
 		"title": "Histories of the National Mall",
-		"parser":"omeka",
+		"parser":"omeka-classic",
 		"url":"http://mallhistory.org",
 		"subtitle": "Omeka archive with historical maps, stories, people and historical events related to the Mall's past.",
 		"categories": ["image"],
