@@ -17,43 +17,87 @@
 		var domain_name = extractDomain(archive.url);
 		var base_url = 'https://'+domain_name;
 		for (var j = 0; j < data.list.length; j++) {
-			var uri = '';
-			var thumb = '';
-			if ('undefined'!=typeof(data.list[j].resource.img_original) && null!=data.list[j].resource.img_original) {
-				uri = base_url+data.list[j].resource.img_original;
-			} else if ('undefined'!=typeof(data.list[j].resource.source_url) && null!=data.list[j].resource.source_url) {
-				uri = data.list[j].resource.source_url;				
-			} else if ('undefined'!=typeof(data.list[j].resource.doc_path) && null!=data.list[j].resource.doc_path) { 
-				uri = base_url+data.list[j].resource.doc_path;				
-			} else {
-				continue;  // TODO
+			var title = '';
+			var url = null;
+			var thumb = null;
+			var content = null;
+			var source = null;
+			var sourceLocation = null;
+			var type = data.list[j].resource.resource_type;
+			if ('quote' == data.list[j].resource.resource_type) {
+				title = 'Quote by '+data.list[j].resource.credit;
+				content = data.list[j].resource.excerpt;
+				source = data.list[j].resource.source_url;
+			} else if ('image' == data.list[j].resource.resource_type) {
+				title = data.list[j].resource.excerpt;
+				url = base_url+data.list[j].resource.img_original.substr(0, data.list[j].resource.img_original.indexOf('?'));
+				thumb = base_url+data.list[j].resource.img_thumb.substr(0, data.list[j].resource.img_thumb.indexOf('?'));
+				source = data.list[j].resource.credit;
+				sourceLocation = data.list[j].resource.source_url;
+			} else if ('video' == data.list[j].resource.resource_type) {
+				title = data.list[j].resource.excerpt;
+				url = data.list[j].resource.source_url;
+				source = data.list[j].resource.credit;					
+			} else if ('audio' == data.list[j].resource.resource_type) {
+				title = data.list[j].resource.excerpt;
+				url = data.list[j].resource.source_url;
+				source = data.list[j].resource.credit;			
+			} else if ('link' == data.list[j].resource.resource_type) {
+				title = data.list[j].resource.excerpt;
+				url = data.list[j].resource.source_url;
+				source = data.list[j].resource.credit;					
+			} else if ('document' == data.list[j].resource.resource_type) {
+				title = data.list[j].resource.excerpt;
+				url = base_url+data.list[j].resource.doc_path.substr(0, data.list[j].resource.doc_path.indexOf('?'));
+				source = data.list[j].resource.credit;
+				sourceLocation = data.list[j].resource.source_url;				
+			} else if ('data' == data.list[j].resource.resource_type) {	
+				if (data.list[j].resource.img_original && data.list[j].resource.img_original.length) {
+					title = data.list[j].resource.excerpt;
+					url = base_url+data.list[j].resource.img_original.substr(0, data.list[j].resource.img_original.indexOf('?'));
+					thumb = base_url+data.list[j].resource.img_thumb.substr(0, data.list[j].resource.img_thumb.indexOf('?'));
+					source = data.list[j].resource.credit;
+					sourceLocation = data.list[j].resource.source_url;
+					type = 'image';
+				} else {
+					title = 'Quote by '+data.list[j].resource.credit;
+					content = data.list[j].resource.excerpt;
+					source = data.list[j].resource.source_url;
+					type = 'quote';
+				};
+			} else if ('assertion' == data.list[j].resource.resource_type) {
+				title = 'Assertion by '+data.list[j].resource.credit;
+				content = data.list[j].resource.excerpt;
+				source = data.list[j].resource.source_url;				
+			} else if ('dispatch' == data.list[j].resource.resource_type) {
+				if (data.list[j].resource.img_original && data.list[j].resource.img_original.length) {
+					title = data.list[j].resource.excerpt;
+					url = base_url+data.list[j].resource.img_original.substr(0, data.list[j].resource.img_original.indexOf('?'));
+					thumb = base_url+data.list[j].resource.img_thumb.substr(0, data.list[j].resource.img_thumb.indexOf('?'));
+					source = data.list[j].resource.credit;
+					sourceLocation = base_url+data.list[j].resource.source_url;
+					type = 'image';
+				} else {
+					title = 'Quote by '+data.list[j].resource.credit;
+					content = data.list[j].resource.excerpt;
+					source = data.list[j].resource.source_url;
+					type = 'quote';
+				};
 			};
-			if (-1!=uri.indexOf('?')) uri = uri.substr(0, uri.indexOf('?'));
-			if ('undefined'!=typeof(data.list[j].resource.img_thumb) && null!=data.list[j].resource.img_thumb) {
-				thumb = base_url+data.list[j].resource.img_thumb;
-				if (-1!=thumb.indexOf('?')) thumb = thumb.substr(0, thumb.indexOf('?'));			
-			};
-			var title = data.list[j].resource.excerpt;
-			var desc = data.list[j].resource.credit_formatted;
-			var source = archive.title;
-			//var sourceLocation = base_url+data.list[j].project_resource_uri;
-			var sourceLocation = uri;
-			var format = data.list[j].resource.resource_type;
-			var identifier = data.list[j].resource.id;
-			var date = data.list[j].created_at;
-			var contributor = data.list[j].resource.Owner.name;		
-        	results[uri] = {
-            		'http://simile.mit.edu/2003/10/ontologies/artstor#thumbnail':[{type:'uri',value:thumb}],
-            		'http://simile.mit.edu/2003/10/ontologies/artstor#url':[{type:'uri',value:uri}],
-            		'http://purl.org/dc/terms/title':[{type:'literal',value:title}],
-            		'http://purl.org/dc/terms/description':[{type:'literal',value:desc}],
-            		'http://purl.org/dc/terms/source':[{type:'literal',value:source}],
-            		'http://simile.mit.edu/2003/10/ontologies/artstor#sourceLocation':[{type:'uri',value:sourceLocation}],
-            		'http://purl.org/dc/terms/format':[{type:'uri',value:format}],
-            		'http://purl.org/dc/terms/identifier':[{type:'uri',value:identifier}],
-            		'http://purl.org/dc/terms/date':[{type:'uri',value:date}],
-            		'http://purl.org/dc/terms/contributor':[{type:'uri',value:contributor}],
-            	};		
+			title = title.replace(/\*/g, '');  // Crossroads' brand of italics
+			var uri = base_url+'/resources/'+data.list[j].resource_id;
+			var contributor = data.list[j].resource.Owner.name;
+			// TODO: location
+			// TODO: lat/lng
+        	results[uri] = {};
+        	results[uri]['http://purl.org/dc/terms/title'] = [{type:'literal',value:title}];
+        	if (null!=url) results[uri]['http://simile.mit.edu/2003/10/ontologies/artstor#url'] = [{type:'uri',value:url}];
+        	if (null!=thumb) results[uri]['http://simile.mit.edu/2003/10/ontologies/artstor#thumbnail'] = [{type:'uri',value:thumb}];
+        	if (null!=content) results[uri]['http://rdfs.org/sioc/ns#content'] = [{type:'literal',value:content}];
+        	if (null!=source) results[uri]['http://purl.org/dc/terms/source'] = [{type:'literal',value:source}];
+        	if (null!=sourceLocation) results[uri]['http://simile.mit.edu/2003/10/ontologies/artstor#sourceLocation'] = [{type:'uri',value:sourceLocation}];
+        	results[uri]['http://purl.org/dc/terms/contributor'] = [{type:'literal',value:contributor}];
+        	results[uri]['http://purl.org/dc/terms/type'] = [{type:'literal',value:type}];
 		}
         console.log(results);
         this.opts.complete_callback(results, archive);
