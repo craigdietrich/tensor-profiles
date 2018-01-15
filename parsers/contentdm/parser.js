@@ -2,6 +2,7 @@
 	
     $.fn.parse = function(options) {
     	if (!options.query.length) throw options.title+" requires at least one search term to be entered into the search field.";
+    	alert('The CONTENTdm Tensor parser isn\'t finished.  You can search for results but don\'t expect importing into collections or syncing to Scalar to work peroperly at this time. ~Craig');
     	var model = new $.fn.spreadsheet_model(options);
     	model.parse = parse;
     	model.fetch('json');

@@ -85,7 +85,7 @@
 				};
 			};
 			title = title.replace(/\*/g, '');  // Crossroads' brand of italics
-			var uri = base_url+'/resources/'+data.list[j].resource_id;
+			var uri = base_url+'/resources/'+data.list[j].resource.id;
 			var contributor = data.list[j].resource.Owner.name;
 			// TODO: location
 			// TODO: lat/lng

@@ -1,8 +1,12 @@
 <?php
 
-if (empty($url)) return self::error('Could not find the Scalar book');
-if ('/' != substr($url, -1, 1)) $url .= '/';
-$url .= 'rdf/instancesof/media?format=json&sq='.$query;
+if ($single) {
+	$url = $query.'.rdfjson';
+} else {
+	if (empty($url)) return self::error('Could not find the Scalar book');
+	if ('/' != substr($url, -1, 1)) $url .= '/';
+	$url .= 'rdf/instancesof/media?format=json&sq='.$query;
+}
 
 // Generic HTTP handler
 session_start();

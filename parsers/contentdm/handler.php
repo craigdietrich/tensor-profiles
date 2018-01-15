@@ -2,18 +2,25 @@
 
 // See http://www.finditillinois.org/wordpress/?page_id=38
 $results_per_page = 10;
+$scheme = parse_url($url, PHP_URL_SCHEME);
 $hostname = parse_url($url, PHP_URL_HOST);
 
 // First, get the server number
-$contents = file_get_contents($url);
-$dom = new DOMDocument;
-libxml_use_internal_errors(true);
-$dom->loadHTML($contents);
-$xpath = new DOMXPath($dom);
-$nodes = $xpath->query("//a[@id='skip_nav']");  // This might be USC-specific?
-$col_str = trim($nodes->item(0)->getAttribute('href'));
-$server = substr($col_str, strpos($col_str,'p')+1);
-$server = (int) substr($server, 0, strpos($server,'col'));
+$diagnostics = $scheme.'://'.$hostname.'/utils/diagnostics';
+$contents = file_get_contents($diagnostics);
+if (!strstr($contents, 'Website is configured to access server at')) {
+	http_response_code(404);
+	echo 'The URL to this contentDM site is not the correct URL to access the site\'s API.';
+	exit;
+}
+$server = strstr($contents, '//server');
+$server = str_replace('//server', '', $server);
+$server = (int) substr($server, 0, strpos($server, '.contentdm'));
+if ($server <= 0) {
+	http_response_code(404);
+	echo 'Could not determine the server number fo this contentDM site or the API for the site is\'t activated.';
+	exit;
+}
 
 // Second, run API search
 $api = 'https://server'.$server.'.contentdm.oclc.org/dmwebservices/index.php?q=dmQuery/all/title^'.urlencode($query).'^all^and/title!subjec!descri!thumb/nosort/'.$results_per_page.'/'.$page.'/1/0/0/0/xml';

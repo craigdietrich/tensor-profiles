@@ -35,6 +35,7 @@ if ($single) {  // A single item
 	$items = curl_exec($ch);
 	curl_close($ch);
 	$items = json_decode($items);
+	if (!is_array($items)) $items = array($items);
 } elseif (!empty($query)) {  // If searching gather all results in the Omeka install first
 	$items = array();
 	get_items($items, $api);
