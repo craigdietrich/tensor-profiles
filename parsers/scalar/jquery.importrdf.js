@@ -215,8 +215,8 @@
 					opts.queue[key]['scalar:custom_scripts'] = $.fn.rdfimporter('rdf_value',{rdf:value,p:'http://scalar.usc.edu/2012/01/scalar-ns#customScript'});
 				// Value is a Scalar Version (scalar:Version)
 				} else if (entry_type !== null && entry_type.search(/Version/) !== -1) {
-				    // Use page url as key to the opts.queue by removing .# extension 
-				    var k = key.match(/^(.*)\.[0-9]*$/)[1];
+				    // Use page url as key to the opts.queue by removing .# extension if it exists
+				    var k = (-1!=key.indexOf('.') && key.lastIndexOf('.') > key.lastIndexOf('/')) ? key.match(/^(.*)\.[0-9]*$/)[1] : key.slice();
 				    // Init queue if doesn't exist
 				    if (opts.queue[k] === undefined) opts.queue[k] = {};
 				    // Extrapolated version fields
@@ -243,6 +243,20 @@
 				        }
 				    }
 				    delete opts.queue[k]['dcterms:references'];
+					var _entry_type = 'http://scalar.usc.edu/2012/01/scalar-ns#Composite';
+					if ( null!=$.fn.rdfimporter('rdf_value',{rdf:value,p:'http://simile.mit.edu/2003/10/ontologies/artstor#url'}) ) {
+						_entry_type = 'http://scalar.usc.edu/2012/01/scalar-ns#Media';
+					}
+ 					opts.queue[key].action = 'ADD';
+					opts.queue[key].native = 'true';
+					opts.queue[key]['scalar:urn'] = '';
+					opts.queue[key].id = opts.dest_id;
+					opts.queue[key].api_key = '';
+					opts.queue[key]['scalar:child_urn'] = opts.dest_urn;
+					opts.queue[key]['scalar:child_type'] = 'http://scalar.usc.edu/2012/01/scalar-ns#Book';
+					opts.queue[key]['scalar:child_rel'] = 'page';
+					opts.queue[key]['urn:scalar:book'] = opts.dest_urn;
+					opts.queue[key]['rdf:type'] = _entry_type;
 				// Value is a combined page/version node
 				} else {
 					if (opts.queue[key] === undefined) opts.queue[key] = {};
@@ -325,6 +339,7 @@
 			var page_count = 0;
 			var page_total = 0;
 			$.each(opts.queue,function(key,value) {
+				console.log(value);
 				page_total++;
 				var url = opts.dest_url+'/api/'+value.action.toLowerCase();
 				$.post(url, value, function(page_data) {
@@ -390,7 +405,6 @@
 					}
 				}
 			}
-			console.log(opts);
 			/*
 			opts.url_map = {}
 			opts.relations = {};
