@@ -112,6 +112,13 @@ profile({
 		"subtitle": "Occidental College content including the Japanese American Relocation collection, the Stereograph collection, the Bill Henry collection, the Railroading collection, Occidental College's Environmental Design collection, and the Barack Obama, U.S. President and Alumnus collection.",
 		"categories": ["image"],
                 "thumbnail": "https://sites.oxy.edu/marketing/oxy-logo/occidental-logo.png"
+	},
+	{
+		"title": "eBird",
+		"parser":"contentdm",
+		"url":"https://ebird.org",
+		"subtitle": "Discover a new world of birding",
+		"categories": ["image"]
 	}
 	],
         "collections":[
