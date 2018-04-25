@@ -95,7 +95,7 @@ profile({
 		"url":"http://digitallibrary.usc.edu",
 		"subtitle": "Spanning a wide range of visual media, the USC Digital Library offers digital images of drawings, illuminated manuscripts, maps, photographs, posters, prints, rare illustrated books, as well as audio and video recordings.",
 		"categories": ["image"],
-                "thumbnail": "https://static1.squarespace.com/static/5437236de4b098bc09157a4f/55a5cf75e4b05434789ed115/55a5cf75e4b05434789ed11a/1413399842245/mzl.trxvbrzp.175x175-75.jpg"
+                "thumbnail": "https://rossier.usc.edu/files/2011/11/usc-square-white.jpg"
 	},
 	{
 		"title": "University of Washington Libraries Digital Collections",
