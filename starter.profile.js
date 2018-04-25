@@ -115,7 +115,7 @@ profile({
 	},
 	{
 		"title": "eBird",
-		"parser":"contentdm",
+		"parser":"ebird",
 		"url":"https://ebird.org",
 		"subtitle": "Discover a new world of birding",
 		"categories": ["image"]
