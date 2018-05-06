@@ -71,24 +71,26 @@ foreach ($records as $record) {
 		$cpd_contents = file_get_contents($cpd);
 		$cpd_contents = json_decode($cpd_contents);
 		$page_num = 1;
-		foreach ($cpd_contents->page as $page) {
-			$contents->is_compound = false;
-			$contents->title = $contents->orig_title.' - '.$page->pagetitle;
-			$contents->filena = $page->pagefile;
-			$contents->pointer = $page->pageptr;
-			$contents->source_str = '//'.$hostname.'/cdm/ref/collection'.$record['collection'].'/id/'.$page->pageptr;
-			$contents->thumb_str = '//'.$hostname.'/utils/getthumbnail/collection'.$record['collection'].'/id/'.$page->pageptr;
-			if (stristr($hostname, '.usc.edu') && stristr($contents->filena, '.jp2')) {
-				$contents->url_str = '//lib-app.usc.edu/assetserver/controller/item/'.$page->pagetitle.'.jpg?v=1024';
-			} elseif (stristr($contents->filena, '.jp2')) {
-				$contents->url_str = 'CONTENTDM IMAGE URL';
-			} elseif (stristr($contents->filena, '.pdfpage')) {
-				$contents->url_str = '//'.$hostname.'/utils/getfile/collection'.$record['collection'].'/id/'.$record['pointer'].'/filename/'.$page->pagefile.'/page/'.$page_num;
-			} else {
-				$contents->url_str = '//'.$hostname.'/utils/getfile/collection'.$record['collection'].'/id/'.$record['pointer'].'/filename/'.$page->pagefile.'/page/'.$page_num;
+		if (isset($cpd_contents->page)) {
+			foreach ($cpd_contents->page as $page) {
+				$contents->is_compound = false;
+				$contents->title = $contents->orig_title.' - '.$page->pagetitle;
+				$contents->filena = $page->pagefile;
+				$contents->pointer = $page->pageptr;
+				$contents->source_str = '//'.$hostname.'/cdm/ref/collection'.$record['collection'].'/id/'.$page->pageptr;
+				$contents->thumb_str = '//'.$hostname.'/utils/getthumbnail/collection'.$record['collection'].'/id/'.$page->pageptr;
+				if (stristr($hostname, '.usc.edu') && stristr($contents->filena, '.jp2')) {
+					$contents->url_str = '//lib-app.usc.edu/assetserver/controller/item/'.$page->pagetitle.'.jpg?v=1024';
+				} elseif (stristr($contents->filena, '.jp2')) {
+					$contents->url_str = 'CONTENTDM IMAGE URL';
+				} elseif (stristr($contents->filena, '.pdfpage')) {
+					$contents->url_str = '//'.$hostname.'/utils/getfile/collection'.$record['collection'].'/id/'.$record['pointer'].'/filename/'.$page->pagefile.'/page/'.$page_num;
+				} else {
+					$contents->url_str = '//'.$hostname.'/utils/getfile/collection'.$record['collection'].'/id/'.$record['pointer'].'/filename/'.$page->pagefile.'/page/'.$page_num;
+				}
+				$return[] = clone $contents;
+				$page_num++;
 			}
-			$return[] = clone $contents;
-			$page_num++;
 		}
 	}
 }
