@@ -119,6 +119,13 @@ profile({
 		"url":"https://ebird.org",
 		"subtitle": "Discover a new world of birding",
 		"categories": ["image"]
+	},
+	{
+		"title": "iNaturalist",
+		"parser":"inaturalist",
+		"url":"https://www.inaturalist.org",
+		"subtitle": "Whether you have a PhD or just love the outdoors, iNaturalist will bring you closer to nature and many fellow naturalists.",
+		"categories": ["image"]
 	}
 	],
         "collections":[
