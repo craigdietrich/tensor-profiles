@@ -71,8 +71,7 @@ profile({
 		"parser":"omeka-classic",
 		"url":"http://mallhistory.org",
 		"subtitle": "Omeka archive with historical maps, stories, people and historical events related to the Mall's past.",
-		"categories": ["image"],
-		"thumbnail": "http://mallhistory.org/files/theme_uploads/e7ba5426e00e4fe9af499a6ce0731a4f.png"
+		"categories": ["image"]
 	},
 	{
 		"title": "Miss Pink's Wildflowers",
@@ -88,13 +87,6 @@ profile({
 		"subtitle": "Info on almost 36,000 slaving voyages that forcibly embarked over 10 million Africans for transport to the Americas between the sixteenth and nineteenth centuries.",
 		"categories": ["image"],
 		"thumbnail": "http://blog.historians.org/images/284.jpg"
-	},
-	{
-		"title": "The Metropolitan Museum of Art",
-		"parser":"themet",
-		"url":"http://www.metmuseum.org",
-		"subtitle": "Works of art spanning five thousand years of world culture, from prehistory to the present and from every part of the globe.",
-		"categories": ["image"]
 	},
 	{
 		"title": "USC Digital Library",
@@ -132,6 +124,13 @@ profile({
 		"parser":"inaturalist",
 		"url":"https://www.inaturalist.org",
 		"subtitle": "Whether you have a PhD or just love the outdoors, iNaturalist will bring you closer to nature and many fellow naturalists.",
+		"categories": ["image"]
+	},
+	{
+		"title": "The Metropolitan Museum of Art",
+		"parser":"themet",
+		"url":"http://www.metmuseum.org",
+		"subtitle": "Works of art spanning five thousand years of world culture, from prehistory to the present and from every part of the globe.",
 		"categories": ["image"]
 	}
 	],
