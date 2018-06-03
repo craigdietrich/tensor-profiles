@@ -70,7 +70,7 @@ profile({
 		"title": "Histories of the National Mall",
 		"parser":"omeka-classic",
 		"url":"http://mallhistory.org",
-		"subtitle": "Omeka archive with historical maps, stories, people and historical events related to the Mall's past.",
+		"subtitle": "Historical maps, stories, people and historical events related to the Mall's past.",
 		"categories": ["image"]
 	},
 	{
@@ -113,6 +113,13 @@ profile({
                 "thumbnail": "https://sites.oxy.edu/marketing/oxy-logo/occidental-logo.png"
 	},
 	{
+		"title": "The Metropolitan Museum of Art",
+		"parser":"themet",
+		"url":"http://www.metmuseum.org",
+		"subtitle": "Works of art spanning five thousand years of world culture, from prehistory to the present and from every part of the globe.",
+		"categories": ["image"]
+	},
+	{
 		"title": "eBird",
 		"parser":"ebird",
 		"url":"https://ebird.org",
@@ -124,13 +131,6 @@ profile({
 		"parser":"inaturalist",
 		"url":"https://www.inaturalist.org",
 		"subtitle": "Whether you have a PhD or just love the outdoors, iNaturalist will bring you closer to nature and many fellow naturalists.",
-		"categories": ["image"]
-	},
-	{
-		"title": "The Metropolitan Museum of Art",
-		"parser":"themet",
-		"url":"http://www.metmuseum.org",
-		"subtitle": "Works of art spanning five thousand years of world culture, from prehistory to the present and from every part of the globe.",
 		"categories": ["image"]
 	}
 	],
