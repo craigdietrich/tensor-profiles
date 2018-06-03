@@ -75,6 +75,13 @@ profile({
 		"thumbnail": "http://mallhistory.org/files/theme_uploads/e7ba5426e00e4fe9af499a6ce0731a4f.png"
 	},
 	{
+		"title": "Miss Pink's Wildflowers",
+		"parser":"omeka-s",
+		"url":"https://exhibit.utas.edu.au/",
+		"subtitle": "Unique watercolour and pencil sketches of Central Australia arid lands' flora by Olive Pink (1884-1975)",
+		"categories": ["image"]
+	},
+	{
 		"title": "Voyages: Trans-Atlantic Slave Trade Database",
 		"parser":"django-images",
 		"url":"http://www.slavevoyages.org",
