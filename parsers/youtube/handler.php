@@ -1,6 +1,7 @@
 <?php
 
 require_once(dirname(__FILE__).'/config.php');
+if (empty($key)) return self::error('Missing the YouTube API key in parsers/youtube/config.php');
 
 if ($single) {
 	if (stristr($query, '://')) $query = substr($query, strrpos($query,'/')+1); 

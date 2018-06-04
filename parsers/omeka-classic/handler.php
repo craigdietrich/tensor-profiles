@@ -2,8 +2,6 @@
 
 if (empty($url)) return self::error('Invalid URL');
 
-// TODO: SSL
-
 // The API url
 if (substr($url, -1, 1) != '/') $url .= '/';
 $api = $url.'api/';
