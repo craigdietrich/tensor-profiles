@@ -16,7 +16,7 @@ function get_items(&$items, $api, $page=1, $recurse=true) {
 	$_items = curl_exec($ch);
 	curl_close($ch);
 	$_items = json_decode($_items);
-	if (isset($_items['message']) && strtolower($_items['message']) == 'api is disabled') return false;
+	if (isset($_items->message) && strtolower($_items->message) == 'api is disabled') return false;
 	$items = array_merge($items, $_items);
 	if (!count($_items)) return true;
 	if (!$recurse) return true;
