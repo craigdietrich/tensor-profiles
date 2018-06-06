@@ -80,7 +80,7 @@
 					results[uri]['http://purl.org/dc/terms/spatial'] = [{type:'literal',value:latlng}];
 				};
 				// Files
-				if ('undefined'!=typeof(data[j].file_urls)) {
+				if ('undefined'!=typeof(data[j].file_urls) && 'undefined'!=typeof(data[j].file_urls[0])) {
 					var file_urls = data[j].file_urls[0];  // TODO: this is where a complex object would be sort out
 					var thumbnail = file_urls.thumbnail;
 					var fullsize = file_urls.fullsize;
