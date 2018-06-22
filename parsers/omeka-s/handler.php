@@ -17,6 +17,31 @@ if ('_item_sets' == $query) {
 	$items = json_decode($items);
 } elseif ($single) {
 	// TODO
+	// http://206.12.100.68/omeka-s/api/items/40
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $query);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	$item = curl_exec($ch);
+	curl_close($ch);
+	$item= json_decode($item);
+	if (is_null($item)) {
+		return self::error('There was something wrong with the individual item\'s URL.');
+	}
+	for ($k = 0; $k < count($item->{'o:media'}); $k++) {
+		$media = $item->{'o:media'}[$k]->{'@id'};
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $media);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		$media = curl_exec($ch);
+		curl_close($ch);
+		$item->media = json_decode($media);
+	}
+	$items = array($item);
+	unset($item);
 } else {
 	// Look for special paraemters in the query string
 	$query = trim($query);
