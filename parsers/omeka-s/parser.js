@@ -2,7 +2,7 @@
 	
 	$.fn.preload = function(options) {
 		var $el = $('<div class="btn-group parser_add_on" id="item_sets_pulldown" data-item-set-id="0" style="float:left;padding-right:4px;"></div>').insertBefore('#search_form');
-		$el.append('<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Item Set</span> <span class="caret"></span></button>');
+		$el.append('<button type="button" style="text-align:left;" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Item Set</span> <span class="caret"></span></button>');
 		var $menu = $('<ul class="dropdown-menu"><li class="disabled"><a href="javascript:void(null);">Loading...</a></li></ul>').appendTo($el);
 		options.query = '_item_sets';
     	var model = new $.fn.spreadsheet_model(options);
@@ -13,6 +13,15 @@
     			return;
     		};
     		$('<li><a href="javascript:void(null);" data-item-set-id="0"><i>No Item Set</i></a></li>').appendTo($menu);
+    		data.sort(function(x, y) {  // Alphabetical
+    			var x_title = '';
+    			var y_title = '';
+    			if ('undefined' != typeof(x['dcterms:title'])) x_title = x['dcterms:title'][0]['@value'];
+    			if ('undefined' != typeof(y['dcterms:title'])) y_title = y['dcterms:title'][0]['@value'];
+    		    if (x_title > y_title) return 1;
+    		    if (x_title < y_title) return -1;
+    		    return 0;
+    		});
     		for (var j = 0; j < data.length; j++) {
     			var id = parseInt(data[j]['o:id']);
     			var title = '[Untitled id '+id+'];';
@@ -67,9 +76,7 @@
 				var sourceLocation = base_url;  // This doesn't seem right but not sure there's a way to get to any URLs for Site items
 				var created = data[j]['o:created']['@value'];
 	        	results[uri] = {
-	        			'http://purl.org/dc/terms/identifier':[{type:'literal',value:identifier}],
-	        			'http://simile.mit.edu/2003/10/ontologies/artstor#sourceLocation':[{type:'uri',value:sourceLocation}],
-	        			'http://purl.org/dc/terms/created':[{type:'literal',value:created}]
+	        			'http://simile.mit.edu/2003/10/ontologies/artstor#sourceLocation':[{type:'uri',value:sourceLocation}]
 	            };
 	        	var modified = ('undefined' != typeof(data[j]['o:modified']) && null != data[j]['o:modified']) ? data[j]['o:modified']['@value'] : null;
 	        	if (modified) results[uri]['http://purl.org/dc/terms/modified'] = [{type:'literal',value:modified}]
