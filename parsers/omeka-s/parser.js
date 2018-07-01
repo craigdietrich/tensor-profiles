@@ -74,10 +74,12 @@
 				var uri = data[j]['@id'];
 				var identifier = data[j]['o:id'];
 				var sourceLocation = base_url;  // This doesn't seem right but not sure there's a way to get to any URLs for Site items
-				var created = data[j]['o:created']['@value'];
 	        	results[uri] = {
 	        			'http://simile.mit.edu/2003/10/ontologies/artstor#sourceLocation':[{type:'uri',value:sourceLocation}]
 	            };
+				//var owner = parseInt(data[j]['o:owner']['o:id']);
+	        	//if (owner) results[uri] = {'http://purl.org/dc/terms/provenance':[{type:'literal',value:owner}]};
+				//var created = data[j]['o:created']['@value'];
 	        	var modified = ('undefined' != typeof(data[j]['o:modified']) && null != data[j]['o:modified']) ? data[j]['o:modified']['@value'] : null;
 	        	if (modified) results[uri]['http://purl.org/dc/terms/modified'] = [{type:'literal',value:modified}]
 	        	// Various media URL fields are either used or not used based on media type it seems
