@@ -2,7 +2,6 @@
 	
     $.fn.parse = function(options) {
     	if (!options.query.length) throw options.title+" requires at least one search term to be entered into the search field.";
-    	alert('The CONTENTdm Tensor parser isn\'t finished.  You can search for results but don\'t expect importing into collections or syncing to Scalar to work peroperly at this time. ~Craig');
     	var model = new $.fn.spreadsheet_model(options);
     	model.parse = parse;
     	model.fetch('json');
@@ -58,13 +57,13 @@
 	        results[sourceLocation]['http://simile.mit.edu/2003/10/ontologies/artstor#thumbnail'] = [{type:'uri',value:thumb}];
 	        results[sourceLocation]['http://simile.mit.edu/2003/10/ontologies/artstor#sourceLocation'] = [{type:'uri',value:sourceLocation}];
 	        results[sourceLocation]['http://purl.org/dc/terms/title'] = [{type:'literal',value:title}];
-	        if (source) results[sourceLocation]['http://purl.org/dc/terms/source'] = [{type:'literal',value:source}];
-	        if (lang) results[sourceLocation]['http://purl.org/dc/terms/language'] = [{type:'literal',value:lang}];
-	        if (type) results[sourceLocation]['http://purl.org/dc/terms/type'] = [{type:'literal',value:type}];
-	        if (rights) results[sourceLocation]['http://purl.org/dc/terms/rights'] = [{type:'literal',value:rights}];
-	        if (created) results[sourceLocation]['http://purl.org/dc/terms/created'] = [{type:'literal',value:created}];
-	        if (coverage) results[sourceLocation]['http://purl.org/dc/terms/coverage'] = [{type:'literal',value:coverage}];
-	        if (format) results[sourceLocation]['http://purl.org/dc/terms/format'] = [{type:'literal',value:format}];
+	        if (source && !$.isEmptyObject(source)) results[sourceLocation]['http://purl.org/dc/terms/source'] = [{type:'literal',value:source}];
+	        if (lang && !$.isEmptyObject(lang)) results[sourceLocation]['http://purl.org/dc/terms/language'] = [{type:'literal',value:lang}];
+	        if (type && !$.isEmptyObject(type)) results[sourceLocation]['http://purl.org/dc/terms/type'] = [{type:'literal',value:type}];
+	        if (rights && !$.isEmptyObject(rights)) results[sourceLocation]['http://purl.org/dc/terms/rights'] = [{type:'literal',value:rights}];
+	        if (created && !$.isEmptyObject(created)) results[sourceLocation]['http://purl.org/dc/terms/created'] = [{type:'literal',value:created}];
+	        if (coverage && !$.isEmptyObject(coverage)) results[sourceLocation]['http://purl.org/dc/terms/coverage'] = [{type:'literal',value:coverage}];
+	        if (format && !$.isEmptyObject(format)) results[sourceLocation]['http://purl.org/dc/terms/format'] = [{type:'literal',value:format}];
         };
         console.log(results);
         this.opts.complete_callback(results, archive);
