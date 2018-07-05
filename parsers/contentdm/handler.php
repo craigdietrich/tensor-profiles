@@ -8,25 +8,33 @@ $page_num = (($page-1) * $results_per_page) + 1;
 $scheme = parse_url($url, PHP_URL_SCHEME);
 $hostname = parse_url($url, PHP_URL_HOST);
 
-// First, get the server number
+// First, get the API domain name
 $diagnostics = $scheme.'://'.$hostname.'/utils/diagnostics';
 $contents = file_get_contents($diagnostics);
+$server = null;
 if (!strstr($contents, 'Website is configured to access server at')) {
 	http_response_code(404);
-	echo 'The URL to this contentDM site is not the correct URL to access the site\'s API.';
+	echo 'The Archive URL provided does not seem to be a CONTENTdm site.';
 	exit;
 }
-$server = strstr($contents, '//server');
-$server = str_replace('//server', '', $server);
-$server = (int) substr($server, 0, strpos($server, '.contentdm'));
-if ($server <= 0) {
+$server = strstr($contents, 'Website is configured to access server at: ( ');	
+$server = str_replace('Website is configured to access server at: ( ', '', $server);
+$server = trim(substr($server, 0, strpos($server, ')')));
+$server = parse_url($server, PHP_URL_HOST);
+if ('localhost'==$server) {
 	http_response_code(404);
-	echo 'Could not determine the server number fo this contentDM site or the API for the site is\'t activated.';
+	echo 'The CONTENTdm archive does not seem to have an accessible API endpoint.';
+	exit;
+}
+$contents = file_get_contents('http://'.$server.'/dmwebservices/');
+if (empty($contents) || !strstr($contents, 'Error: The last item in the URL must be either')) {
+	http_response_code(404);
+	echo 'Could not locate the API address for the CONTENTdm archive. This could be because the archive is not hosted by OCLC and the API is turned off.';
 	exit;
 }
 
 // Second, run API search
-$api = 'https://server'.$server.'.contentdm.oclc.org/dmwebservices/index.php?q=dmQuery/all/title^'.urlencode($query).'^all^and/title!subjec!descri!thumb/nosort/'.$results_per_page.'/'.$page_num.'/1/0/0/0/xml';
+$api = 'http://'.$server.'/dmwebservices/index.php?q=dmQuery/all/title^'.urlencode($query).'^all^and/title!subjec!descri!thumb/nosort/'.$results_per_page.'/'.$page_num.'/1/0/0/0/xml';
 $contents = file_get_contents($api);
 $dom = new DOMDocument;
 libxml_use_internal_errors(true);
@@ -45,7 +53,7 @@ foreach($elements as $node){
 // Third, call each record individually
 $return = array();
 foreach ($records as $record) {
-	$api = 'https://server'.$server.'.contentdm.oclc.org/dmwebservices/index.php?q=dmGetItemInfo'.$record['collection'].'/'.$record['pointer'].'/json';
+	$api = 'http://'.$server.'/dmwebservices/index.php?q=dmGetItemInfo'.$record['collection'].'/'.$record['pointer'].'/json';
 	$contents = file_get_contents($api);
 	$contents = json_decode($contents);
 	$contents->orig_title = $contents->title;
@@ -115,7 +123,7 @@ foreach ($records as $record) {
 	
 	// Finally, get compound filenames
 	if ($contents->is_compound) {
-		$cpd = 'https://server'.$server.'.contentdm.oclc.org/dmwebservices/index.php?q=dmGetCompoundObjectInfo'.$record['collection'].'/'.$record['pointer'].'/json';
+		$cpd = 'http://'.$server.'/dmwebservices/index.php?q=dmGetCompoundObjectInfo'.$record['collection'].'/'.$record['pointer'].'/json';
 		$cpd_contents = file_get_contents($cpd);
 		$cpd_contents = json_decode($cpd_contents);
 		$page_num = 1;
