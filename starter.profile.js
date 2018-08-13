@@ -86,7 +86,7 @@ profile({
 		"url":"http://www.slavevoyages.org",
 		"subtitle": "Info on almost 36,000 slaving voyages that forcibly embarked over 10 million Africans for transport to the Americas between the sixteenth and nineteenth centuries.",
 		"categories": ["image"],
-		"thumbnail": "http://blog.historians.org/images/284.jpg"
+		"thumbnail": "https://www.neh.gov/files/imagecache/neh_large/news/images/slavetrade2.jpg"
 	},
 	{
 		"title": "USC Digital Library",
