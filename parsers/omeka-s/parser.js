@@ -121,6 +121,13 @@
 				} else if ('undefined' != typeof(results[uri]['http://purl.org/dc/terms/descriptiion']) && results[uri]['http://purl.org/dc/terms/descriptiion'].length > 1) {
 					results[uri]['http://purl.org/dc/terms/title'] = [ results[uri]['http://purl.org/dc/terms/title'][0] ];
 				};
+				// Special considerations
+				if (-1 != archive.url.indexOf('206.12.100.68')) {  // UBC Press
+					if ('undefined' != typeof(results[uri]['http://purl.org/dc/terms/accrualPeriodicity'])) {
+						results[uri]['http://purl.org/vra/culturalContext'] = $.extend(true, [], results[uri]['http://purl.org/dc/terms/accrualPeriodicity']);
+						delete results[uri]['http://purl.org/dc/terms/accrualPeriodicity'];
+					}
+				};
 			};
 	        console.log(results);
 	        self.opts.complete_callback(results, archive);
