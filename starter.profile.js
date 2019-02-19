@@ -35,7 +35,7 @@ profile({
 		"parser":"internetarchive",
 		"url":"https://archive.org",
 		"subtitle": "A non-profit digital library of just about anything.",
-		"categories": ["video", "image", "audio", "affiliated"]
+		"categories": ["video", "image", "audio", "affiliated","document"]
 	},
 	{
 		"title": "Critical Commons",
@@ -132,6 +132,13 @@ profile({
 		"url":"https://www.inaturalist.org",
 		"subtitle": "Whether you have a PhD or just love the outdoors, iNaturalist will bring you closer to nature and many fellow naturalists.",
 		"categories": ["image"]
+	},
+	{
+		"title": "Digital Access to Scholarship at Harvard",
+		"parser":"dspace-6",
+		"url":"https://dash.harvard.edu",
+		"subtitle": "A central, open-access repository of research by members of the Harvard community.",
+		"categories": ["image","document"]
 	}
 	],
         "collections":[
