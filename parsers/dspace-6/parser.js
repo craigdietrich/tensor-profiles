@@ -16,13 +16,11 @@
         };
         var disallowed_metadata_keys = ['dc.identifier.uri','dc.date.accessioned','dc.date.available'];
         if ('/' != archive.url.substr(-1)) archive.url += '/';
-        var base_url = archive.url;
-        base_url += 'jspui/';  // TODO: this can be [xmlui|jspui] or nothing
         for (var j = 0; j < data.length; j++) {
         	for (var k = 0; k < data[j].bitstreams.length; k++) {
         		if ('license.txt' == data[j].bitstreams[k].name) continue;
-        		var sourceLocation = base_url+'handle/'+data[j].handle;
-        		var url = base_url+'bitstream/'+data[j].handle+'/'+data[j].bitstreams[k].sequenceId+'/'+encodeURIComponent(data[j].bitstreams[k].name);
+        		var sourceLocation = archive.url+'handle/'+data[j].handle;
+        		var url = archive.url+'bitstream/'+data[j].handle+'/'+data[j].bitstreams[k].sequenceId+'/'+encodeURIComponent(data[j].bitstreams[k].name);
         		var thumbnail = url;
 	        	// Write object
 	        	results[url] = {
