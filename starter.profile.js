@@ -138,7 +138,8 @@ profile({
 		"parser":"dspace-6",
 		"url":"https://dash.harvard.edu",
 		"subtitle": "A central, open-access repository of research by members of the Harvard community.",
-		"categories": ["image","document"]
+		"categories": ["image","document"],
+		"thumbnail": "https://muninetworks.org/sites/www.muninetworks.org/files/dash_COLOR.jpg"
 	}
 	],
         "collections":[
