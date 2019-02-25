@@ -308,7 +308,14 @@
 							opts.queue[key]['scalar:slug'] = opts.existing[k].slug;
 							opts.queue[key]['scalar:urn'] = opts.existing[k].urn;
 							opts.queue[key].action = 'UPDATE';
-						}
+							if ('undefined'!=typeof(opts.existing[k].referenced_by_urn) && opts.existing[k].referenced_by_urn.length) {
+								for (var m = 0; m < opts.existing[k].referenced_by_urn.length; m++) {
+									opts.url_map[ opts.existing[k].referenced_by_urn[m] ] = opts.existing[k].referenced_by_urn[m];
+									if ('undefined'==typeof(opts.relations[ opts.existing[k].referenced_by_urn[m] ])) opts.relations[ opts.existing[k].referenced_by_urn[m] ] = {reference:[]};
+									opts.relations[ opts.existing[k].referenced_by_urn[m] ].reference.push( {child:opts.existing[k].urn, hash:''} );
+								};
+							};
+						};
 					};
 					// Extrapolated version fields
 				    opts.queue[key]['scalar:default_view'] = $.fn.rdfimporter('rdf_value',{rdf:value,p:'http://scalar.usc.edu/2012/01/scalar-ns#defaultView'});
@@ -357,7 +364,7 @@
 					if ('object'!=typeof(page_data)) return;
 					$.each(page_data, function(k,v) {
 						if ('/'==k.substr(k.length-1, 1)) k = k.substr(0, k.length-1);
-						opts.url_map[key] = k.match(/^(.*)\.[0-9]*$/)[1];
+						if ('UPDATE'==value.action) opts.url_map[value['scalar:urn']] = v['http://scalar.usc.edu/2012/01/scalar-ns#urn'][0].value;
 					});
 				}).always(function(err) {
 					page_count++;
@@ -388,6 +395,7 @@
 				console.log(old_parent_url + ' ' + parent_url + ' '+urn);
 				for (var rel_type in opts.relations[old_parent_url]) {
 					for (var j in opts.relations[old_parent_url][rel_type]) {
+						if ('object' != typeof(opts.relations[old_parent_url][rel_type][j])) continue;
 						var post = {};
 						post['action'] = 'RELATE';
 						post['native'] = 'true';
@@ -423,18 +431,27 @@
 		},
 		existing : function(options, callback) {
 			if ('function'==typeof(options)) callback = options;
-			var url = opts.dest_url+'/rdf/instancesof/media?format=json&callback=?';  // Only check URL field, for now
+			var url = opts.dest_url+'/rdf/instancesof/media?format=json&ref=1&rec=1&callback=?';  // Only check URL field, for now
 			opts.existing = [];
 			$.getJSON(url, function(json) {
 				for (var uri in json) {
 					if ('undefined'==typeof(json[uri]['http://simile.mit.edu/2003/10/ontologies/artstor#url'])) continue;
-					opts.existing.push({
+					var obj = {
 						slug:json[uri]['http://purl.org/dc/terms/isVersionOf'][0].value.replace(opts.dest_url+'/',''),
 						uri:json[uri]['http://purl.org/dc/terms/isVersionOf'][0].value,
 						url:json[uri]['http://simile.mit.edu/2003/10/ontologies/artstor#url'][0].value,
 						title:json[uri]['http://purl.org/dc/terms/title'][0].value,
 						urn:json[uri]['http://scalar.usc.edu/2012/01/scalar-ns#urn'][0].value
-					});
+					};
+					if ('undefined'!=typeof(json[uri]['http://purl.org/dc/terms/isReferencedBy'])) {
+						obj.referenced_by_urn = [];
+						for (var j = 0; j < json[uri]['http://purl.org/dc/terms/isReferencedBy'].length; j++) {
+							var content_item = json[ json[uri]['http://purl.org/dc/terms/isReferencedBy'][0].value ];
+							var version_item = json[ content_item['http://purl.org/dc/terms/hasVersion'][0].value ];
+							obj.referenced_by_urn.push( version_item['http://scalar.usc.edu/2012/01/scalar-ns#urn'][0].value );
+						};
+					};
+					opts.existing.push(obj);
 				};
 				callback();
 			});
