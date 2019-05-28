@@ -18,10 +18,8 @@
  */  
 
 /**
- * @projectDescription  Transfer RDF-JSON from a source Scalar book to a destination book
+ * @projectDescription  Forked from Scalar's rdfimporter library, elaborates on combined page/version node import for Tensor; should some day be merged
  * @author				Craig Dietrich
- * @author				Michael Lynch
- * @version             1.2
  */
 
 (function($) {
@@ -61,7 +59,6 @@
 	};
 
 	var opts = {};
-	//if ('undefined'!=typeof($.csv)) defaults.additional_formats.push('csv');
 	if ('undefined'!=typeof(Papa)) defaults.additional_formats.push('csv');
 
 	var rdfimporter_methods = {
@@ -317,6 +314,21 @@
 									opts.relations[ opts.existing[k].referenced_by_urn[m] ].reference.push( {child:opts.existing[k].urn, hash:''} );
 								};
 							};
+							if ('undefined'!=typeof(opts.existing[k].relationships_by_urn)) {
+								for (var rel in opts.existing[k].relationships_by_urn) {
+									if (-1 != rel.indexOf('_by')) {
+										var rel_type = rel.replace('_by', '');
+										for (var m = 0; m < opts.existing[k].relationships_by_urn[rel].length; m++) {
+											opts.url_map[ opts.existing[k].relationships_by_urn[rel][m]['urn'] ] = opts.existing[k].relationships_by_urn[rel][m]['urn'];
+											if ('undefined'==typeof(opts.relations[ opts.existing[k].relationships_by_urn[rel][m]['urn'] ])) opts.relations[ opts.existing[k].relationships_by_urn[rel][m]['urn'] ] = {};
+											if ('undefined'==typeof(opts.relations[ opts.existing[k].relationships_by_urn[rel][m]['urn'] ][rel_type])) opts.relations[ opts.existing[k].relationships_by_urn[rel][m]['urn'] ][rel_type] = [];
+											opts.relations[ opts.existing[k].relationships_by_urn[rel][m]['urn'] ][rel_type].push( {child:opts.existing[k].urn, hash:opts.existing[k].relationships_by_urn[rel][m]['hash']} );
+										};										
+									} else if (-1 != rel.indexOf('_of')) {
+										// TODO
+									};
+								};
+							};
 						};
 					};
 					// Extrapolated version fields
@@ -435,6 +447,7 @@
 			if ('function'==typeof(options)) callback = options;
 			var url = opts.dest_url+'/rdf/instancesof/media?format=json&ref=1&rec=1&callback=?';  // Only check URL field, for now
 			opts.existing = [];
+			$('#existing_progress').fadeIn();
 			$.getJSON(url, function(json) {
 				for (var uri in json) {
 					if ('undefined'==typeof(json[uri]['http://simile.mit.edu/2003/10/ontologies/artstor#url'])) continue;
@@ -453,8 +466,34 @@
 							obj.referenced_by_urn.push( version_item['http://scalar.usc.edu/2012/01/scalar-ns#urn'][0].value );
 						};
 					};
+					for (var rel_uri in json) {
+						if ('undefined'==typeof(json[rel_uri]['http://www.w3.org/1999/02/22-rdf-syntax-ns#type'])) continue;
+						if ('http://www.openannotation.org/ns/Annotation'!=json[rel_uri]['http://www.w3.org/1999/02/22-rdf-syntax-ns#type'][0].value) continue;
+						var body = json[rel_uri]['http://www.openannotation.org/ns/hasBody'][0].value;
+						var target = json[rel_uri]['http://www.openannotation.org/ns/hasTarget'][0].value;
+						var rel_type = '';
+						var hash = '';
+						if (-1 == target.indexOf('#')) {
+							rel_type = 'tag';
+						} else {
+							var hash = target.substr(target.indexOf('#')+1);
+							rel_type = $.fn.rdfimporter('hash_to_rel_type', hash);
+							target = target.substr(0, target.indexOf('#'));
+						};
+						if (uri == target.substr(0, uri.length)) {  // has a parent
+							rel_type += '_by';
+							if ('undefined' == typeof(obj.relationships_by_urn)) obj.relationships_by_urn = {};
+							if ('undefined' == typeof(obj.relationships_by_urn[rel_type])) obj.relationships_by_urn[rel_type] = [];
+							var version_item = json[ body ];
+							obj.relationships_by_urn[rel_type].push({urn:version_item['http://scalar.usc.edu/2012/01/scalar-ns#urn'][0].value,hash:hash});
+						} else if (rel_uri == body) {  // has a child
+							rel_type += '_of';
+							// TODO
+						};
+					};
 					opts.existing.push(obj);
 				};
+				if ($('#existing_progress').is(':visible')) $('#existing_progress').fadeOut();
 				callback();
 			});
 		},

@@ -37,7 +37,7 @@
 				opts.complete_callback(to_send);
 			});
 		};
-		$.getScript( $('link#base_url').attr('href')+'parsers/'+opts.parser+'/jquery.importrdf.js', function() {
+		$.getScript( $('link#base_url').attr('href')+'parsers/'+opts.parser+'/jquery.tensor-importrdf.js', function() {
 			$.getScript( $('link#base_url').attr('href')+'parsers/'+opts.parser+'/papaparse.min.js', function() {
 				// Validate the destination book
 				$.fn.rdfimporter('book_rdf', {url:opts.url}, function(obj) {
@@ -48,7 +48,7 @@
 					var to_send = {};
 					to_send.dest_url = obj.uri;  // This ensures that the URL is to the book regardless of whether the user inputted a page in that book
 					to_send.dest_urn = $.fn.rdfimporter('rdf_value',{rdf:obj.rdf,p:'http://scalar.usc.edu/2012/01/scalar-ns#urn'});	
-					to_send.dest_id = 'craigdietrich@gmail.com';
+					to_send.dest_id = '';
 					to_send.source_url = '';
 					commit(to_send);
 				});
