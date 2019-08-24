@@ -310,7 +310,8 @@
 							if ('undefined'!=typeof(opts.existing[k].referenced_by_urn) && opts.existing[k].referenced_by_urn.length) {
 								for (var m = 0; m < opts.existing[k].referenced_by_urn.length; m++) {
 									opts.url_map[ opts.existing[k].referenced_by_urn[m] ] = opts.existing[k].referenced_by_urn[m];
-									if ('undefined'==typeof(opts.relations[ opts.existing[k].referenced_by_urn[m] ])) opts.relations[ opts.existing[k].referenced_by_urn[m] ] = {reference:[]};
+									if ('undefined'==typeof(opts.relations[ opts.existing[k].referenced_by_urn[m] ])) opts.relations[ opts.existing[k].referenced_by_urn[m] ] = {};
+									if ('undefined'==typeof(opts.relations[ opts.existing[k].referenced_by_urn[m] ].reference)) opts.relations[ opts.existing[k].referenced_by_urn[m] ].reference = [];
 									opts.relations[ opts.existing[k].referenced_by_urn[m] ].reference.push( {child:opts.existing[k].urn, hash:''} );
 								};
 							};
