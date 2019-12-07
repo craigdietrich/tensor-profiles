@@ -37,7 +37,7 @@
 				opts.complete_callback(to_send);
 			});
 		};
-		$.getScript( $('link#base_url').attr('href')+'parsers/'+opts.parser+'/jquery.tensor-importrdf.js', function() {
+		$.getScript( $('link#base_url').attr('href')+'parsers/'+opts.parser+'/jquery.importrdf.js', function() {
 			$.getScript( $('link#base_url').attr('href')+'parsers/'+opts.parser+'/papaparse.min.js', function() {
 				// Validate the destination book
 				$.fn.rdfimporter('book_rdf', {url:opts.url}, function(obj) {

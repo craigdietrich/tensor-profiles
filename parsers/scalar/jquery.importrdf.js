@@ -20,6 +20,7 @@
 /**
  * @projectDescription  Forked from Scalar's rdfimporter library, elaborates on combined page/version node import for Tensor; should some day be merged
  * @author				Craig Dietrich
+ * @version				1.1
  */
 
 (function($) {
@@ -78,6 +79,8 @@
 			        	// Once queued, save pages (which includes media-pages)
 			        	$content_progress = $this.find('#content_progress'); 
 			        	$content_progress_text = $content_progress.find('span');
+			        	//console.log(opts);
+			        	//return;
 			        	$.fn.rdfimporter('pages', function(pagination, error_msg) {
 			        		var progress = ((pagination.count/pagination.total)*100)+'%';
 			        		$content_progress.css('width', progress);
@@ -248,7 +251,7 @@
 				    if (references) {
 				        for (var j = 0; j < references.length; j++) {
 				        	if ('undefined'==typeof(opts.relations[k])) opts.relations[k] = {};
-				        	if ('undefined'==typeof(opts.relations[k]['reference'])) opts.relations[k]['reference'] = [];	
+				        	if ('undefined'==typeof(opts.relations[k]['reference'])) opts.relations[k]['reference'] = [];
 				        	opts.relations[k]['reference'].push({child:references[j],hash:''});
 				        }
 				    }
@@ -257,16 +260,16 @@
 					if ( null!=$.fn.rdfimporter('rdf_value',{rdf:value,p:'http://simile.mit.edu/2003/10/ontologies/artstor#url'}) ) {
 						_entry_type = 'http://scalar.usc.edu/2012/01/scalar-ns#Media';
 					}
- 					opts.queue[key].action = 'ADD';
-					opts.queue[key].native = 'true';
-					opts.queue[key]['scalar:urn'] = '';
-					opts.queue[key].id = opts.dest_id;
-					opts.queue[key].api_key = '';
-					opts.queue[key]['scalar:child_urn'] = opts.dest_urn;
-					opts.queue[key]['scalar:child_type'] = 'http://scalar.usc.edu/2012/01/scalar-ns#Book';
-					opts.queue[key]['scalar:child_rel'] = 'page';
-					opts.queue[key]['urn:scalar:book'] = opts.dest_urn;
-					opts.queue[key]['rdf:type'] = _entry_type;
+ 					opts.queue[k].action = 'ADD';
+					opts.queue[k].native = 'true';
+					opts.queue[k]['scalar:urn'] = '';
+					opts.queue[k].id = opts.dest_id;
+					opts.queue[k].api_key = '';
+					opts.queue[k]['scalar:child_urn'] = opts.dest_urn;
+					opts.queue[k]['scalar:child_type'] = 'http://scalar.usc.edu/2012/01/scalar-ns#Book';
+					opts.queue[k]['scalar:child_rel'] = 'page';
+					opts.queue[k]['urn:scalar:book'] = opts.dest_urn;
+					opts.queue[k]['rdf:type'] = _entry_type;
 				// Value is a combined page/version node
 				} else {
 					if (opts.queue[key] === undefined) opts.queue[key] = {};
@@ -379,7 +382,11 @@
 					if ('object'!=typeof(page_data)) return;
 					$.each(page_data, function(k,v) {
 						if ('/'==k.substr(k.length-1, 1)) k = k.substr(0, k.length-1);
-						if ('UPDATE'==value.action) opts.url_map[value['scalar:urn']] = v['http://scalar.usc.edu/2012/01/scalar-ns#urn'][0].value;
+						if ('UPDATE'==value.action) {
+							opts.url_map[value['scalar:urn']] = v['http://scalar.usc.edu/2012/01/scalar-ns#urn'][0].value;
+						} else {
+							opts.url_map[key] = k.match(/^(.*)\.[0-9]*$/)[1];
+						}
 					});
 				}).always(function(err) {
 					page_count++;
@@ -420,10 +427,14 @@
 						post['scalar:urn'] = urn;
 						post['scalar:child_rel'] = $.fn.rdfimporter('child_rel', rel_type);
 						// Write the relational values
-						relate_total++;
 						var old_child_url = opts.relations[old_parent_url][rel_type][j].child;
 						var hash = opts.relations[old_parent_url][rel_type][j].hash;
 						var child_url = opts.url_map[old_child_url];
+						if ('undefined' == typeof(child_url)) {
+							console.log("Couldn't find child_url for: " + old_child_url);
+							continue;
+						}
+						relate_total++;
 						var child_urn = child_url.replace(opts.dest_url, '');
 						if ('/'==child_urn.substr(0,1)) child_urn = child_urn.substr(1);
 						post['scalar:child_urn'] = child_urn;
