@@ -11,9 +11,10 @@
 	function parse(data, archive) {
 	  let results = data.results.reduce( (obj, vid) => {
 		  let thumb = 'https://criticalcommons.org' + vid.thumbnail_url;
+		  let embedLink = vid.url.replace('view', 'embed');
 		  obj[vid.url] = {
 			  'http://simile.mit.edu/2003/10/ontologies/artstor#thumbnail':[{type:'uri',value:thumb}],
-			  'http://simile.mit.edu/2003/10/ontologies/artstor#url':[{type:'uri',value:vid.url}],
+			  'http://simile.mit.edu/2003/10/ontologies/artstor#url':[{type:'uri',value:embedLink}],
 			  'http://purl.org/dc/terms/title':[{type:'literal',value:vid.title}],
 			  'http://purl.org/dc/terms/source':[{type:'literal',value:archive.title}],
 			  'http://simile.mit.edu/2003/10/ontologies/artstor#sourceLocation':[{type:'uri',value:vid.url}],
